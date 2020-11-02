@@ -55,3 +55,4 @@ function run_test(){
 }
 
 get_test $1
+rm file2 file3 doethet newfile.txt newfile test1 test2 test3 test4 x1 x2 x3 y1 y2 ilovewords.txt hardesttest.txt
