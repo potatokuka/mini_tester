@@ -1,3 +1,4 @@
+#!/bin/bash
 # Unit tester for Minishell
 
 RESET="\033[0m"
@@ -15,16 +16,25 @@ WHITE="\033[1m\033[37m"
 # cp ../minishell .
 # chmod 755 minishell
 
-MSHELL_PATH=../minishell/
+MSHELL_PATH=../codam_minishell/
 
-get_test() {
+#$1 = color, ${@:2} is string
+printf_color() {
+	1>&2 printf $1
+	printf "${@:2}"
+	1>&2 printf $RESET
+}
+
+parse_options() {
 	CAT=0
 	for var in $@; do
 		if [ "$var" = "-e" ]; then
 			CAT=1
 		fi
 	done
+}
 
+get_test() {
 	if ! [ -f "${MSHELL_PATH}minishell" ]; then
 		printf "${RED}ERROR${RESET}: Minishell path doesn't contain 'minishell' executable\nMinishell path is currently set to: \"${MSHELL_PATH}\"\nChange the MSHELL_PATH variable in the script to set the path\n"
 		exit 1
@@ -39,84 +49,54 @@ get_test() {
 			continue
 		fi
 		while IFS= read -r line; do
-			# echo "Text read from file : $line"
 			run_test $line
-			# printf " $YELLOW--- NEW CMD ---\n\n$RESET"
 		done < "$var"
 	done
 }
 
 run_test() {
-	# echo "inside run_test"
-#	# echo $line
 	RESULT=$(echo $line "; exit" | ${MSHELL_PATH}minishell 2>&-)
-	# echo "----"
-	# echo $RESULT
 	FLAG=0
 	EXIT_MS=$?
 	EXPECTED=$(echo $line "; exit" | bash 2>&-)
 	EXIT_BASH=$?
 	if [ "$RESULT" = "$EXPECTED" ] && [ "$EXIT_MS" = "$EXIT_BASH" ]; then
-		printf " "
-		1>&2 printf "$GREEN"
-		printf "%s" "[OK]"
-		1>&2 printf "$RESET"
+		printf_color $GREEN "[OK]"
 	else
-		printf " "
-		1>&2 printf "$RED"
-		printf "%s" "[KO]"
-		1>&2 printf "$RESET"
+		printf_color $RED "[KO]"
 	fi
 	echo " "$line
 	if [ "$RESULT" != "$EXPECTED" ]; then
-		echo
 		FLAG=1
-		# printf $RED"Your output :\n%.20s\n$RED$RESULT\n%.20s$RESET\n" "----"
-		1>&2 printf "$RED"
-		printf "Your output :\n"
 		if [ "$CAT" = 1 ]; then
-			echo $RESULT | cat -e
+			printf_color $RED "\nYour output :\n$(echo $RESULT | cat -e)\n"
 		else
-			echo $RESULT
+			printf_color $RED "\nYour output :\n$(echo $RESULT)\n"
 		fi
-		# printf $GREEN"Expected output :\n%.20s\n$GREEN$EXPECTED\n%.20s$RESET\n" "----"
-		1>&2 printf "$GREEN"
-		printf "Bash output :\n"
 		if [ "$CAT" = 1 ]; then
-			echo $EXPECTED | cat -e
+			printf_color $GREEN "Bash output :\n$(echo $EXPECTED | cat -e)\n"
 		else
-			echo $EXPECTED
+			printf_color $GREEN "Bash output :\n$(echo $EXPECTED)\n"
 		fi
 	fi
 	if [ "$EXIT_MS" != "$EXIT_BASH" ]; then
 		echo
 		FLAG=1
-		1>&2 printf "$RED"
-		printf "Your exit status : "
-		1>&2 printf "$RED"
-		printf "$EXIT_MS"
-		1>&2 printf "$RESET"
-		echo
-		1>&2 printf "$GREEN"
-		printf "Bash exit status : "
-		1>&2 printf "$GREEN"
-		printf "$EXIT_BASH"
-		1>&2 printf "$RESET"
-		echo
+		printf_color $RED "Your exit status : $EXIT_MS\n"
+		printf_color $GREEN "Bash exit status : $EXIT_BASH\n"
 	fi
 	if [ $FLAG -eq 1 ]; then
-		printf "\n "
-		1>&2 printf "$YELLOW"
-		printf "%s NEW CMD %s\n\n" "---" "---"
-		1>&2 printf "$RESET"
+		printf_color $YELLOW '\n %s NEW CMD %s\n\n' '---' '---'
 		sleep 0.1
 	fi
 }
 
 if [ $# -eq 0 ]; then
-	printf "${RED}ERROR${RESET}: Please provide atleast one argument\nUsage: ./unit_tester.sh <TEST_FILE> [OPTIONS]\n"
+	printf "${RED}ERROR${RESET}: Please provide atleast one argument\nUsage: ./unit_tester.sh <TEST_FILES>... [OPTIONS]\n"
 	exit 1
 fi
+
+parse_options $@
 
 get_test $@
 # rm file1 file2 file3 doethet newfile.txt newfile test1 test2 test3 test4 x1 x2 x3 y1 y2 ilovewords.txt hardesttest.txt
