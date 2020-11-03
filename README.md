@@ -10,4 +10,4 @@ THIS IS PURELY A QUICKER WAY TO RUN TESTS.
 USAGE 
 
 Clone this into root of repo
-"bash unit_tester.sh <file_with_tests>"
+"bash unit_tester.sh <file_with_tests> -e(if you want to print with '| cat -e')"
