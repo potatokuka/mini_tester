@@ -15,7 +15,7 @@ WHITE="\033[1m\033[37m"
 # cp ../minishell .
 # chmod 755 minishell
 
-MSHELL_PATH=../codam_minishell/
+MSHELL_PATH=../minishell/
 
 get_test() {
 	CAT=0
