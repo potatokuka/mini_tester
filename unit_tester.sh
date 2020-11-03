@@ -20,6 +20,7 @@ function get_test(){
 	while IFS= read -r line; do
 		# echo "Text read from file : $line"
 		run_test $line
+		printf " $YELLOW--- NEW CMD ---\n\n$RESET"
 	done < "$1"
 }
 
