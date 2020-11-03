@@ -17,19 +17,25 @@ WHITE="\033[1m\033[37m"
 
 
 function get_test(){
+	if [ "$2" == "-e" ]; then
+		CAT=1
+	else
+		CAT=0
+	fi
 	while IFS= read -r line; do
 		# echo "Text read from file : $line"
 		run_test $line
-		printf " $YELLOW--- NEW CMD ---\n\n$RESET"
+		# printf " $YELLOW--- NEW CMD ---\n\n$RESET"
 	done < "$1"
 }
 
 function run_test(){
 	# echo "inside run_test"
-	# echo $line
+#	# echo $line
 	TEST1=$(echo $line "; exit" | ../minishell 2>&-)
 	# echo "----"
 	# echo $TEST1
+	FLAG=0
 	ES_1=$?
 	TEST2=$(echo $line "; exit" | bash 2>&-)
 	ES_2=$?
@@ -42,22 +48,35 @@ function run_test(){
 	if [ "$TEST1" != "$TEST2" ]; then
 		echo
 		echo
+		FLAG=1
 		# printf $RED"Your output :\n%.20s\n$RED$TEST1\n%.20s$RESET\n" "----"
 		printf $RED"Your output :\n"
-		echo $TEST1
+		if [ $CAT=1 ]; then
+			echo $TEST1 | cat -e
+		else
+			echo $TEST1
+		fi
 		# printf $GREEN"Expected output :\n%.20s\n$GREEN$TEST2\n%.20s$RESET\n" "----"
 		printf $GREEN"Expected output :\n"
-		echo $TEST2
+		if [ $CAT=1 ]; then
+			echo $TEST2 | cat -e
+		else
+			echo $TEST2
+		fi
 	fi
 	if [ "$ES_1" != "$ES_2" ]; then
 		echo
 		echo
+		FLAG=1
 		printf $RED"Your exit status : $RED$ES_1$RESET\n"
 		printf $GREEN"Expected exit status : $GREEN$ES_2$RESET\n"
 	fi
-	echo
-	sleep 0.1
+	if [ $FLAG == 1 ]; then
+		echo
+		printf " $YELLOW--- NEW CMD ---\n\n$RESET"
+		sleep 0.1
+	fi
 }
 
-get_test $1
-rm file1 file2 file3 doethet newfile.txt newfile test1 test2 test3 test4 x1 x2 x3 y1 y2 ilovewords.txt hardesttest.txt
+get_test $1 $2
+# rm file1 file2 file3 doethet newfile.txt newfile test1 test2 test3 test4 x1 x2 x3 y1 y2 ilovewords.txt hardesttest.txt
