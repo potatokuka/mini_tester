@@ -27,7 +27,7 @@ function get_test(){
 function run_test(){
 	# echo "inside run_test"
 	# echo $line
-	TEST1=$(echo $line "; exit" | ./minishell 2>&-)
+	TEST1=$(echo $line "; exit" | ../minishell 2>&-)
 	# echo "----"
 	# echo $TEST1
 	ES_1=$?
