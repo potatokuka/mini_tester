@@ -1,6 +1,13 @@
 # mini_tester
 
+
+THIS IS NOT A REPLACEMENT FOR EVALS OR REAL TESTING,
+THIS IS PURELY A QUICKER WAY TO RUN TESTS.
+- DO NOT FAIL SOMEONE BECAUSE THEY FAILED THIS
+- DO NOT PASS SOMEONE BECAUSE THEY PASSED THIS
+- DO YOU'RE OWN TESTING, DO NOT BE A SHEEP.
+
 USAGE 
 
-Have you minishell executable in same directory
+Clone this into root of repo
 "bash unit_tester.sh <file_with_tests>"

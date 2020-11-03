@@ -18,18 +18,13 @@ WHITE="\033[1m\033[37m"
 
 function get_test(){
 	while IFS= read -r line; do
-		# echo "Text read from file : $line"
 		run_test $line
 		printf " $YELLOW--- NEW CMD ---\n\n$RESET"
 	done < "$1"
 }
 
 function run_test(){
-	# echo "inside run_test"
-	# echo $line
-	TEST1=$(echo $line "; exit" | ./minishell 2>&-)
-	# echo "----"
-	# echo $TEST1
+	TEST1=$(echo $line "; exit" | ../minishell 2>&-)
 	ES_1=$?
 	TEST2=$(echo $line "; exit" | bash 2>&-)
 	ES_2=$?
