@@ -11,12 +11,10 @@ echo /$"123$USER"
 echo | cd .. | pwd
 echo DOET HET NIET > test1 | cat test1
 echo hallo >x1 >x2 >x3 | echo hoi
-echo $1 234
 echo $POEP hallo
 echo "hallo$"
 echo "\poep"
 echo $/
-echo $2$4
 echo $
 echo "123\"456"
 exit 123 123 123
@@ -238,9 +236,7 @@ poeppoep2maranellendeEND
 echo 'poep2'"maran"'ellende'
 poep2maranellende
 echo 123"hallo$"456
-123hallo$456
 export kip=ei=koe===melk
-echo $1234
 echo $_1234
 echo hallo
 echo hallo | echo hoi
@@ -257,14 +253,10 @@ echt bash
 cat x1 | grep Makefile
 ls > x1 ; cat x1 | grep main
 echo $USERhallo
-echo $2$*
 echo $hallo"poep"
 echo /$"123$USER"
-echo $222
-echo hallo$USER***$USER$2$
 echo $a5aap
 echo $_poep
-echo "$####jgklj"
 echo hallo$\abc
 hallo$abc
 echo hallo$\\abc
@@ -287,8 +279,6 @@ echo abc$USER123
 echo abc$POEPdef
 echo $%%%%jlkjtwejt				
 echo %%$
-echo $####jgklj$USER
-echo $@@@lkgj
 echo $"USERhallo"
 echo "$2$*"
 echo "$222"
@@ -311,7 +301,6 @@ echo "abc$USER123"
 echo "abc$POEPdef"
 echo "$%%%%jlkjtwejt"
 echo "%%$"
-echo "$@@@lkgj"
 echo $"hallo"
 echo $hallo
 echo $hallo"poep"	
@@ -333,9 +322,7 @@ echo "\\$USER"
 echo "123\"456"
 123"456
 echo "123\$456"
-123$456
 echo "123\`456"
-123`456
 echo "123\\456"
 123\456
 echo "123\!456"
