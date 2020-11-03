@@ -18,13 +18,18 @@ WHITE="\033[1m\033[37m"
 
 function get_test(){
 	while IFS= read -r line; do
+		# echo "Text read from file : $line"
 		run_test $line
 		printf " $YELLOW--- NEW CMD ---\n\n$RESET"
 	done < "$1"
 }
 
 function run_test(){
-	TEST1=$(echo $line "; exit" | ../minishell 2>&-)
+	# echo "inside run_test"
+	# echo $line
+	TEST1=$(echo $line "; exit" | ./minishell 2>&-)
+	# echo "----"
+	# echo $TEST1
 	ES_1=$?
 	TEST2=$(echo $line "; exit" | bash 2>&-)
 	ES_2=$?
@@ -37,8 +42,12 @@ function run_test(){
 	if [ "$TEST1" != "$TEST2" ]; then
 		echo
 		echo
-		printf $RED"Your output :\n%.20s\n$RED$TEST1\n%.20s$RESET\n" "----"
-		printf $GREEN"Expected output :\n%.20s\n$GREEN$TEST2\n%.20s$RESET\n" "----"
+		# printf $RED"Your output :\n%.20s\n$RED$TEST1\n%.20s$RESET\n" "----"
+		printf $RED"Your output :\n"
+		echo $TEST1
+		# printf $GREEN"Expected output :\n%.20s\n$GREEN$TEST2\n%.20s$RESET\n" "----"
+		printf $GREEN"Expected output :\n"
+		echo $TEST2
 	fi
 	if [ "$ES_1" != "$ES_2" ]; then
 		echo
