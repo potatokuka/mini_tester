@@ -38,7 +38,7 @@ function run_test(){
 	else
 		printf " $RED%s$RESET" "X"
 	fi
-	printf "$CYAN \"$line\" $RESET"
+	echo " "$line
 	if [ "$TEST1" != "$TEST2" ]; then
 		echo
 		echo
