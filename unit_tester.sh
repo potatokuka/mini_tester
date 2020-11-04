@@ -27,8 +27,8 @@ printf_color() {
 
 echo_color() {
 	1>&2 printf $1
-	echo "${@:2}"
-	echo "${@:3}"
+	echo "$2"
+	echo "$3"
 	1>&2 printf $RESET
 }
 
