@@ -53,6 +53,7 @@ get_test() {
 			run_test $line
 		done < "$var"
 	done
+	echo ----- Finished Tests -----
 	printf "\nPassed = "
 	echo $PASS
 	printf "\nFailed = "
