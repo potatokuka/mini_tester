@@ -69,9 +69,9 @@ get_test() {
 
 run_test() {
 	FLAG=0
-	RESULT=$(echo $line "; exit" | ${MSHELL_PATH}minishell 2>&-)
+	RESULT=$(echo $line "; exit" | ${MSHELL_PATH}minishell 2>/dev/null)
 	EXIT_MS=$?
-	EXPECTED=$(echo $line "; exit" | bash 2>&-)
+	EXPECTED=$(echo $line "; exit" | bash 2>/dev/null)
 	EXIT_BASH=$?
 	if [ "$RESULT" = "$EXPECTED" ] && [ "$EXIT_MS" = "$EXIT_BASH" ]; then
 		printf_color $GREEN "[OK]"
