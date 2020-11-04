@@ -16,7 +16,7 @@ WHITE="\033[1m\033[37m"
 # cp ../minishell .
 # chmod 755 minishell
 
-MSHELL_PATH=../codam_minishell/
+MSHELL_PATH=../
 
 #$1 = color, ${@:2} is string
 printf_color() {
@@ -46,7 +46,8 @@ get_test() {
 		printf "${RED}ERROR${RESET}: Minishell path doesn't contain 'minishell' executable\nMinishell path is currently set to: \"${MSHELL_PATH}\"\nChange the MSHELL_PATH variable in the script to set the path\n"
 		exit 1
 	fi
-
+	PASS=0
+	FAIL=0
 	for var in $@; do
 		if [ "${var::1}" = "-" ]; then
 			continue
@@ -59,6 +60,11 @@ get_test() {
 			run_test $line
 		done < "$var"
 	done
+	echo ----- Finished Tests -----
+	printf "\nPassed = "
+	echo $PASS
+	printf "\nFailed = "
+	echo $FAIL
 }
 
 run_test() {
@@ -69,8 +75,10 @@ run_test() {
 	EXIT_BASH=$?
 	if [ "$RESULT" = "$EXPECTED" ] && [ "$EXIT_MS" = "$EXIT_BASH" ]; then
 		printf_color $GREEN "[OK]"
+		let PASS++
 	else
 		printf_color $RED "[KO]"
+		let FAIL++
 	fi
 	echo " "$line
 	if [ "$RESULT" != "$EXPECTED" ]; then
