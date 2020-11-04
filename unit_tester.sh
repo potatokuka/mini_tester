@@ -25,6 +25,13 @@ printf_color() {
 	1>&2 printf $RESET
 }
 
+echo_color() {
+	1>&2 printf $1
+	echo "${@:2}"
+	echo "${@:3}"
+	1>&2 printf $RESET
+}
+
 parse_options() {
 	CAT=0
 	for var in $@; do
@@ -55,8 +62,8 @@ get_test() {
 }
 
 run_test() {
-	RESULT=$(echo $line "; exit" | ${MSHELL_PATH}minishell 2>&-)
 	FLAG=0
+	RESULT=$(echo $line "; exit" | ${MSHELL_PATH}minishell 2>&-)
 	EXIT_MS=$?
 	EXPECTED=$(echo $line "; exit" | bash 2>&-)
 	EXIT_BASH=$?
@@ -69,14 +76,14 @@ run_test() {
 	if [ "$RESULT" != "$EXPECTED" ]; then
 		FLAG=1
 		if [ "$CAT" = 1 ]; then
-			printf_color $RED "\nYour output :\n$(echo $RESULT | cat -e)\n"
+			echo_color $RED "Your output :" "$(echo $RESULT | cat -e)"
 		else
-			printf_color $RED "\nYour output :\n$(echo $RESULT)\n"
+			echo_color $RED "Your output :" "$(echo $RESULT)"
 		fi
 		if [ "$CAT" = 1 ]; then
-			printf_color $GREEN "Bash output :\n$(echo $EXPECTED | cat -e)\n"
+			echo_color $GREEN "Bash output :" "$(echo $EXPECTED | cat -e)"
 		else
-			printf_color $GREEN "Bash output :\n$(echo $EXPECTED)\n"
+			echo_color $GREEN "Bash output :" "$(echo $EXPECTED)"
 		fi
 	fi
 	if [ "$EXIT_MS" != "$EXIT_BASH" ]; then
