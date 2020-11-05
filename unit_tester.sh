@@ -27,7 +27,7 @@ cleanup() {
 	fi
 }
 
-MSHELL_PATH=../codam_minishell/
+MSHELL_PATH=../
 
 #$1 = color, ${@:2} is string
 printf_color() {
