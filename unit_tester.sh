@@ -16,7 +16,18 @@ WHITE="\033[1m\033[37m"
 # cp ../minishell .
 # chmod 755 minishell
 
-MSHELL_PATH=../
+cleanup() {
+	if [ "$FILESTATE_SET" -eq 0 ]; then
+		ls > .filestate_before
+		FILESTATE_SET=1
+	else
+		ls > .filestate_after
+		FILESTATE_DIFF=$(diff .filestate_before .filestate_after | grep ">" | sed "s|> ||g" | tr '\n' ' ')
+		rm $FILESTATE_DIFF .filestate_before .filestate_after
+	fi
+}
+
+MSHELL_PATH=../codam_minishell/
 
 #$1 = color, ${@:2} is string
 printf_color() {
@@ -113,5 +124,8 @@ fi
 
 parse_options $@
 
+FILESTATE_SET=0
+cleanup
 get_test $@
+cleanup
 # rm file1 file2 file3 doethet newfile.txt newfile test1 test2 test3 test4 x1 x2 x3 y1 y2 ilovewords.txt hardesttest.txt
