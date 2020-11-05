@@ -322,7 +322,6 @@ echo "\\$USER"
 echo "123\"456"
 123"456
 echo "123\$456"
-echo "123\`456"
 echo "123\\456"
 123\456
 echo "123\!456"
@@ -334,7 +333,6 @@ echo \"1234"
 echo "1\a234"
 echo \1
 echo "\1234"
-echo "1234" \; echo hoi
 echo "1234\\"
 echo '1234\\'
 echo '1234'
@@ -343,7 +341,6 @@ echo '1234\'
 echo \'1234'
 echo '1\a234'
 echo '\1234'
-echo '1234' \; echo hoi
 echo '1234\\'
 echo '1234\\'
 echo \a
@@ -377,10 +374,7 @@ echo \7
 echo \8
 echo \9
 echo \:
-echo \;
-echo \<
 echo \=
-echo \>
 echo \?
 echo \@
 echo \A
@@ -414,7 +408,6 @@ echo \\
 echo \]
 echo \^
 echo \_
-echo \`
 echo \a
 echo \b
 echo \c
@@ -442,7 +435,6 @@ echo \x
 echo \y
 echo \z
 echo \{
-echo \|
 echo \}
 echo \~
 echo "\!"
@@ -471,7 +463,6 @@ echo "\7"
 echo "\8"
 echo "\9"
 echo "\:"
-echo "\;"
 echo "\<"
 echo "\="
 echo "\>"
@@ -508,7 +499,6 @@ echo "\\"
 echo "\]"
 echo "\^"
 echo "\_"
-echo "\`"
 echo "\a"
 echo "\b"
 echo "\c"
@@ -565,7 +555,6 @@ echo '\7'
 echo '\8'
 echo '\9'
 echo '\:'
-echo '\;'
 echo '\<'
 echo '\='
 echo '\>'
@@ -602,7 +591,6 @@ echo '\\'
 echo '\]'
 echo '\^'
 echo '\_'
-echo '\`'
 echo '\a'
 echo '\b'
 echo '\c'
@@ -633,3 +621,11 @@ echo '\{'
 echo '\|'
 echo '\}'
 echo '\~'
+echo '\;'
+echo "\;"
+echo '\>'
+echo "\>"
+echo '\<'
+echo "\<"
+echo '\|'
+echo "\|"
