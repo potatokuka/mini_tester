@@ -1,0 +1,120 @@
+/bin/ls
+/bin/pwd
+ls -la
+pwd
+/bin/chmod
+/bin/ls -la
+/bin/ls
+/bin/ls doesnotexist
+ctrl-C
+ctrl-D
+ctrl-\
+asdf ctrl-C
+asdf ctrl-D
+cat ctrl-C
+asdf ctrl-\
+cat ctrl-D
+hoi
+"
+hallo$
+unset a ; env ; unset test ; unset test1 ; env
+unset PATH
+ls
+wc
+awk
+cd ..
+pwd
+/bin/ls
+cd ..
+pwd
+/bin/ls
+cd notworking
+cd .
+cd .. ;pwd;/bin/ls;cd .. ;      pwd    ;/bin/ls;     cd notworking;     cd .
+cd ~
+cd $IETSONBESTAANDS
+cd $GEK ..
+cd $NOTHING $MORENOTHING ..
+pwd
+pwd .
+pwd ..
+cd ../Desktop
+ls -la
+awk '{ print }' /etc/passwd
+cat < test4
+< test4 cat
+> newfile ; > working.txt
+< working.txt
+< notworking.txt
+cat | cat -e | cat
+cd
+cd ~/
+hallo
+hallo
+cd $IETSONBESTAANDS
+cd $IETSONBESTAANDS
+cd $POEP $MEERPOEP ..
+cd poep
+ls
+"ls"
+test
+/bin/ls
+/binn/ls
+hallo ma\"ran siemons
+Multiple line error
+hallo ma\ran siemons						Hij ziet de \ niet als escape, print gewoon \
+ma\							
+hallo$USER
+hallo\$USER
+\$?
+$USER
+\$USER
+"\$USER"
+\poep
+poep
+poep"
+poep\'
+hallo"\poep
+hallo
+maran
+'$USER'
+$USER
+123"456
+\poep
+123\'456
+hallo$
+"
+$USERmaran
+$USERmaran$USER/maran
+hallo1234maranmaran/$USER/maranpoeppoep2maranellendeEND
+maran/$USER
+poeppoep2maranellendeEND
+poep2maranellende
+123hallo$456
+echt bash
+cat x1 | grep Makefile
+ls > x1 ; cat x1 | grep main
+hallo$abc
+hallo$\abc
+halloUSER
+halloPOEP
+halloUSER
+"hallo$USER"
+hallo$abc
+“$rewtwet”
+$"
+$'
+\hallo
+\hallo
+hallo\hoi
+\maran
+123"456
+123$456
+123`456
+123\456
+123\!456
+mkdir test; cd test; rm -rf ../test; 
+pwd; cd ..
+$TEST$TEST$TEST$TEST
+cp minishell test; chmod u-x test; 
+./test; echo $?

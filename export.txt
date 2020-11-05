@@ -1,0 +1,44 @@
+env
+export ; export a="\\" ; export b='\\' ; export c="\b" ; export
+env
+export a=hijdoehet ; export
+export test=working ; export
+export test1
+export
+export test1=
+export
+export 1test
+export _TEST=DOethetwelmetunderscore
+env
+env ; echo ; export a=hijdoehet ; echo ; env ; echo ; export test=working;echo ;env ; echo ; export test1; export; echo ; env ; echo ; export test1= ; echo ; env
+export
+export ZZZ
+export ZZZ=
+export ; export a="\\" ; export b='\\' ; export c="\b" ; export
+export LS="ls -la" ; ls
+export TEST="evenchecken"
+export | grep -e "PWD="
+export | grep -e "HOME="
+export PATH="test:working:multiplepath:directory1:directory2"
+export
+echo hi ; echo ; echo ; echo ; export ; env ; echo ; echo ; echo ; echo working ; echo $PWD
+export kip=ei=koe===melk
+export TEST=/Users/maran/Desktop/minishell
+export TEST_$USER=hallo$LOGNAME
+export
+export ZZZ
+export ZZZ=
+export ZZZ=new_value
+export ZZZ======new
+export ZZZ=new YYY=new2 XXX===new3
+export $USER
+export TEST=$USER4857987345
+export 123$USER---
+export MARANSIEMONS
+export MARANSIEMONS=lief
+export =
+export +=
+export hello=hi hello+=wow
+export $HULLO=there; echo $HULLO
+export potato=tomato orange=doorhinge; 
+export po1=yes po2=no; echo $po1 $po2; 
