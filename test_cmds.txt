@@ -280,7 +280,6 @@ echo abc$POEPdef
 echo $%%%%jlkjtwejt				
 echo %%$
 echo $"USERhallo"
-echo "$2$*"
 echo "$222"
 echo "hallo$USER***$USER$2$"
 echo "$_poep"
