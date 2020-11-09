@@ -18,8 +18,6 @@ echo $/
 echo $
 echo "123\"456"
 exit 123 123 123
-exit a b b c c c
-exit a
 exit 1234
 echo $?
 /bin/ls
@@ -163,8 +161,6 @@ ls
 "ls"
 test
 exit
-exit a
-exit a 1
 exit 99
 exit 3 a
 exit 55 99
