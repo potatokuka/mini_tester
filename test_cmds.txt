@@ -247,6 +247,8 @@ echo hallo | echo hoi > y1 >y2 | cat -e
 echo hoi > y1 >y2 ; cat -e
 echo hallo | echo hoi > y1 >y2 ; cat -e
 echt bash
+echo "hello | this is some stuff > touch this file" | grep more
+env | leaks
 cat x1 | grep Makefile
 ls > x1 ; cat x1 | grep main
 echo $USERhallo
