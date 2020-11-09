@@ -1,4 +1,6 @@
 echo 00\\\'pp ; echo 00\\\\\'pp
+echo ';;'
+echo ";;;"
 echo 00\\\\'pp' ; echo “./hello”. ; echo ./hello ; echo ello
 Echo ; echo \n ' \n this is the; "first line"' ; echo "and right here;;; 'We have the second'" ; echo and" a fe"'w 'here'; with some slash and quotes   .'   '\' ; echo '\\' ; echo "\\" ; echo    "\"" ; echo   \\ ; echo   \' ; echo   \" "\\"    "\""   \\   \'   \"
 echo /$"123$USER"
