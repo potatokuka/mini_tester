@@ -57,7 +57,7 @@ To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
-Bash has to be installed and accessible through $PATH.
+Bash has to be installed and accessible through $PATH.  
 Your minishell has to write its prompt to STDERR.
 
 ### Installation
