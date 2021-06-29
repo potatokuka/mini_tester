@@ -117,12 +117,9 @@ run_single_test()
 	if [ "$RESULT_MS" != "$RESULT_BASH" ]; then
 		if [ "$CAT" = 1 ]; then
 			echo_color $RED "Your output :" "$(echo $RESULT_MS | cat -e)"
-		else
-			echo_color $RED "Your output :" "$(echo $RESULT_MS)"
-		fi
-		if [ "$CAT" = 1 ]; then
 			echo_color $GREEN "Bash output :" "$(echo $RESULT_BASH | cat -e)"
 		else
+			echo_color $RED "Your output :" "$(echo $RESULT_MS)"
 			echo_color $GREEN "Bash output :" "$(echo $RESULT_BASH)"
 		fi
 	fi
