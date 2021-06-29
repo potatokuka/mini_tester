@@ -58,7 +58,8 @@ To get a local copy up and running follow these simple steps.
 ### Prerequisites
 
 Bash has to be installed and accessible through $PATH.  
-Your minishell has to write its prompt to STDERR.
+Your minishell has to write its prompt to STDERR.  
+Your minishell has to read regularly (get_next_line) when STDIN does not refer to a terminal device.
 
 ### Installation
 
