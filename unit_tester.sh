@@ -1,8 +1,9 @@
 #!/bin/bash
 # Unit tester for Minishell
 
-RESET="\033[0m"
+MINISHELL_PATH="../minishell/"
 
+RESET="\033[0m"
 BLACK="\033[1m\033[30m"
 RED="\033[1m\033[31m"
 GREEN="\033[1m\033[32m"
@@ -12,38 +13,53 @@ MAGENTA="\033[1m\033[35m"
 CYAN="\033[1m\033[36m"
 WHITE="\033[1m\033[37m"
 
-# make -C ../ > /dev/null
-# cp ../minishell .
-# chmod 755 minishell
+#Automatic clean up of created files in current directory:
 
-cleanup() {
-	if [ "$FILESTATE_SET" -eq 0 ]; then
-		ls > .filestate_before
-		FILESTATE_SET=1
-	else
-		ls > .filestate_after
-		FILESTATE_DIFF=$(diff .filestate_before .filestate_after | grep ">" | sed "s|> ||g" | tr '\n' ' ')
-		rm $FILESTATE_DIFF .filestate_before .filestate_after
-	fi
+record_filestate_of_current_directory()
+{
+	ls > .filestate_before
+}
+remove_files_created_by_test()
+{
+	ls > .filestate_after
+	FILESTATE_DIFF=$(diff .filestate_before .filestate_after | grep ">" | sed "s|> ||g" | tr '\n' ' ')
+	rm $FILESTATE_DIFF .filestate_before .filestate_after
 }
 
-MSHELL_PATH=../
-
 #$1 = color, ${@:2} is string
-printf_color() {
+printf_color()
+{
 	1>&2 printf $1
 	printf "${@:2}"
 	1>&2 printf $RESET
 }
 
-echo_color() {
+echo_color()
+{
 	1>&2 printf $1
 	echo "$2"
 	echo "$3"
 	1>&2 printf $RESET
 }
 
-parse_options() {
+separate_options_from_files()
+{
+	OPTIONS=()
+	FILES=()
+
+	for var in $@; do
+	{
+		if [ "${var::1}" = "-" ]; then
+			OPTIONS+=("$var")
+		else
+			FILES+=("$var")
+		fi
+	}
+	done
+}
+
+parse_options()
+{
 	CAT=0
 	for var in $@; do
 		if [ "$var" = "-e" ]; then
@@ -52,66 +68,70 @@ parse_options() {
 	done
 }
 
-get_test() {
-	if ! [ -f "${MSHELL_PATH}minishell" ]; then
-		printf "${RED}ERROR${RESET}: Minishell path doesn't contain 'minishell' executable\nMinishell path is currently set to: \"${MSHELL_PATH}\"\nChange the MSHELL_PATH variable in the script to set the path\n"
+check_if_minishell_path_is_valid()
+{
+	if ! [ -f "${MINISHELL_PATH}minishell" ]; then
+		printf "${RED}ERROR${RESET}: Minishell path doesn't contain 'minishell' executable\nMinishell path is currently set to: \"${MINISHELL_PATH}\"\nChange the MINISHELL_PATH variable in the script to set the path\n"
 		exit 1
 	fi
-	PASS=0
-	FAIL=0
-	for var in $@; do
-		if [ "${var::1}" = "-" ]; then
-			continue
-		fi
-		if [ ! -f "$var" ]; then
-			printf "File '$var' does not exist\n"
-			continue
-		fi
-		while IFS= read -r line; do
-			run_test $line
-		done < "$var"
-	done
-	echo ----- Finished Tests -----
-	printf "\nPassed = "
-	echo $PASS
-	printf "\nFailed = "
-	echo $FAIL
 }
 
-run_test() {
-	FLAG=0
-	RESULT=$(echo $line "; exit" | ${MSHELL_PATH}minishell 2>/dev/null)
+run_all_tests()
+{
+	PASS_COUNTER=0
+	FAIL_COUNTER=0
+
+	for file in $@; do
+	{
+		if [ ! -f "$file" ]; then
+			printf "File '$file' does not exist\n"
+			continue
+		fi
+		while IFS= read line || [[ "$line" ]]; do
+			run_single_test $line
+		done < "$file"
+	}
+	done
+	echo "---- Finished Tests -----"
+	echo ""
+	printf "Passed = ""$PASS_COUNTER""\n"
+	printf "Failed = ""$FAIL_COUNTER""\n"
+}
+
+run_single_test()
+{
+	FAILED=0
+	RESULT_MS=$(echo $line "; exit" | ${MINISHELL_PATH}minishell 2>/dev/null)
 	EXIT_MS=$?
-	EXPECTED=$(echo $line "; exit" | bash 2>/dev/null)
+	RESULT_BASH=$(echo $line "; exit" | bash 2>/dev/null)
 	EXIT_BASH=$?
-	if [ "$RESULT" = "$EXPECTED" ] && [ "$EXIT_MS" = "$EXIT_BASH" ]; then
+	if [ "$RESULT_MS" = "$RESULT_BASH" ] && [ "$EXIT_MS" = "$EXIT_BASH" ]; then
 		printf_color $GREEN "[OK]"
-		let PASS++
+		let PASS_COUNTER++
 	else
 		printf_color $RED "[KO]"
-		let FAIL++
+		let FAIL_COUNTER++
+		FAILED=1
 	fi
 	echo " "$line
-	if [ "$RESULT" != "$EXPECTED" ]; then
-		FLAG=1
+	if [ "$RESULT_MS" != "$RESULT_BASH" ]; then
 		if [ "$CAT" = 1 ]; then
-			echo_color $RED "Your output :" "$(echo $RESULT | cat -e)"
+			echo_color $RED "Your output :" "$(echo $RESULT_MS | cat -e)"
 		else
-			echo_color $RED "Your output :" "$(echo $RESULT)"
+			echo_color $RED "Your output :" "$(echo $RESULT_MS)"
 		fi
 		if [ "$CAT" = 1 ]; then
-			echo_color $GREEN "Bash output :" "$(echo $EXPECTED | cat -e)"
+			echo_color $GREEN "Bash output :" "$(echo $RESULT_BASH | cat -e)"
 		else
-			echo_color $GREEN "Bash output :" "$(echo $EXPECTED)"
+			echo_color $GREEN "Bash output :" "$(echo $RESULT_BASH)"
 		fi
 	fi
 	if [ "$EXIT_MS" != "$EXIT_BASH" ]; then
 		echo
-		FLAG=1
 		printf_color $RED "Your exit status : $EXIT_MS\n"
 		printf_color $GREEN "Bash exit status : $EXIT_BASH\n"
 	fi
-	if [ $FLAG -eq 1 ]; then
+	if [ $FAILED -eq 1 ]; then
 		printf_color $YELLOW '\n %s NEW CMD %s\n\n' '---' '---'
 		sleep 0.1
 	fi
@@ -122,10 +142,11 @@ if [ $# -eq 0 ]; then
 	exit 1
 fi
 
-parse_options $@
+check_if_minishell_path_is_valid
 
-FILESTATE_SET=0
-cleanup
-get_test $@
-cleanup
-# rm file1 file2 file3 doethet newfile.txt newfile test1 test2 test3 test4 x1 x2 x3 y1 y2 ilovewords.txt hardesttest.txt
+separate_options_from_files $@
+parse_options ${OPTIONS[@]}
+
+record_filestate_of_current_directory
+run_all_tests ${FILES[@]}
+remove_files_created_by_test
