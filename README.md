@@ -12,7 +12,6 @@
     Easy to use tester to compare results of provided testcases between your minishell and bash!
     <br />
     <br />
-    <br />
     ·
     <a href="https://github.com/potatokuka/mini_tester/issues">Report Bug</a>
     ·
@@ -72,7 +71,7 @@ Bash has to be installed and accessible through $PATH.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-`bash unit_tester.sh testfile [testfiles..] [-e]`
+`bash unit_tester.sh FILE [FILE2 FILE3 ..] [-e]`
 
 Options:
  
